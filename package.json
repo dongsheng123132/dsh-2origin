@@ -1,6 +1,6 @@
 {
   "name": "dsh-2origin",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Evidence-first 2Origin state projection, diff and immutable freeze for DeepSeek Harness",
   "license": "MIT",
   "type": "module",
@@ -13,13 +13,17 @@
     "dsh-2origin": "./bin/dsh-2origin.mjs"
   },
   "files": [
+    ".codex-plugin/",
+    ".mcp.json",
     "index.js",
     "lib/",
     "bin/",
     "cordis.patch.yml",
+    "mcp-server.mjs",
     "README.md",
     "README.zh-CN.md",
-    "LICENSE"
+    "LICENSE",
+    "SECURITY.md"
   ],
   "dsh": {
     "bundle": {
@@ -34,10 +38,16 @@
       "optional": true
     }
   },
+  "devDependencies": {
+    "@deepseek-ai/dsh-tools": "0.0.1-rc.1"
+  },
   "scripts": {
-    "test": "node --test test/state.test.mjs",
+    "test": "node --test test/*.test.mjs",
     "check": "node scripts/check.mjs",
-    "smoke:plugin": "node test/plugin-smoke.mjs"
+    "smoke:plugin": "node test/plugin-smoke.mjs",
+    "smoke:mcp": "node test/mcp-smoke.mjs",
+    "smoke:dsh": "node test/dsh-runtime-smoke.mjs",
+    "smoke:web-loader": "node test/stock-web-loader-smoke.mjs"
   },
   "engines": {
     "node": ">=22"
@@ -55,4 +65,3 @@
     "optimistic-lock"
   ]
 }
-

@@ -9,6 +9,8 @@ Evidence-first 2Origin state projection, semantic diff and immutable freeze for 
 
 Chat history is not the handoff artifact. A `task.origin.json` state is. This plugin lets a DSH agent inspect that state, distinguish semantic content from provenance metadata, compare a complete candidate, and freeze the exact observed version with an optimistic-lock credential.
 
+v0.2 is a formal Codex plugin with a separate proof-only MCP surface. It also removes the default export that made the real Cordis Loader discard namespace `inject` metadata, and carries a stock Web Loader regression smoke.
+
 ## Install
 
 ```bash
@@ -44,9 +46,20 @@ dsh-2origin freeze --root C:/project --state demo/task/task.origin.json --expect
 
 The content hash is compatible with `2origin/0.2`: SHA-256 over stable canonical JSON, excluding `version`, `updated_at`, `content_hash`, and `actor`.
 
+## Codex and MCP
+
+The repository contains `.codex-plugin/plugin.json` and an independent stdio MCP server:
+
+- `state_proof` verifies one bounded inline state document and returns only integrity, hashes, counts and violations.
+- `state_diff_proof` compares two bounded inline documents and returns changed fields plus content-addressed value/item hashes.
+
+The MCP server never reads or writes the filesystem, rejects secret-shaped keys, caps each document at 1 MiB, and does not echo state prose. It intentionally does not expose freeze: filesystem writes remain on the explicitly configured DSH/CLI surfaces.
+
 ## Boundaries
 
-v0.1 deliberately does not update the live state. Freeze is the only write action and targets a separate snapshot directory. Live-state mutation needs schema and fact-lifecycle policy from its owning system; duplicating a weaker writer here would create a second truth.
+The plugin deliberately does not update the live state. Freeze is the only write action and targets a separate snapshot directory. Live-state mutation needs schema and fact-lifecycle policy from its owning system; duplicating a weaker writer here would create a second truth.
+
+This is not a general memory store, plugin trust scanner or activity logger. Tools such as Agent Passport, generic state files and workspace ledgers solve adjacent problems; dsh-2origin is narrowly the verification adapter for an existing `2origin/0.2` task-state document.
 
 ## Verify
 
@@ -54,6 +67,8 @@ v0.1 deliberately does not update the live state. Freeze is the only write actio
 npm test
 npm run check
 npm run smoke:plugin
+npm run smoke:mcp
+python C:/Users/ZhuanZ/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .
 ```
 
 MIT

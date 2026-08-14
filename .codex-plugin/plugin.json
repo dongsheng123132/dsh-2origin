@@ -1,0 +1,20 @@
+{
+  "name": "dsh-2origin",
+  "version": "0.2.0",
+  "description": "Verify, compare and freeze integrity-checked 2Origin task state without creating a second live-state writer.",
+  "author": { "name": "2Origin", "url": "https://github.com/dongsheng123132" },
+  "homepage": "https://github.com/dongsheng123132/dsh-2origin#readme",
+  "repository": "https://github.com/dongsheng123132/dsh-2origin",
+  "license": "MIT",
+  "keywords": ["deepseek-harness", "2origin", "task-state", "optimistic-lock", "evidence"],
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "DSH 2Origin",
+    "shortDescription": "Verify and freeze integrity-checked task state.",
+    "longDescription": "Inspect 2Origin task-state integrity, compare semantic content separately from provenance metadata, and freeze the exact observed version behind an optimistic-lock hash.",
+    "developerName": "2Origin",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Audit"],
+    "defaultPrompt": ["Verify these two sanitized 2Origin state documents and summarize their proof-only diff."]
+  }
+}

@@ -5,7 +5,7 @@
 [![Node.js 22+](https://img.shields.io/badge/Node.js-%E2%89%A522-339933?logo=nodedotjs&logoColor=white)](package.json)
 [![Awesome DSH Plugins](https://img.shields.io/badge/Awesome_DSH-%E5%B7%B2%E9%AA%8C%E8%AF%81%E5%AE%9E%E9%AA%8C-0969da)](https://github.com/dongsheng123132/awesome-dsh-plugins/blob/main/README.zh-CN.md#2origin-%E6%8F%92%E4%BB%B6%E5%AE%9E%E9%AA%8C%E5%AE%A4)
 
-面向 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的证据优先 2Origin 状态投影、语义差异与不可变冻结插件。
+面向 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的证据优先 2Origin 状态投影、语义差异与不可变冻结插件。v0.2 同时是正式 Codex 插件，并提供独立的、只输出证明的 MCP 表面。
 
 聊天记录不是交接信物，`task.origin.json` 才是。插件让 DSH agent 检查学历、区分语义内容与来源元数据、比较完整候选，并凭刚观测到的乐观锁指纹冻结精确版本。
 
@@ -44,9 +44,18 @@ dsh-2origin freeze --root C:/project --state demo/task/task.origin.json --expect
 
 内容指纹兼容 `2origin/0.2`：对稳定键序 JSON 做 SHA-256，同时排除 `version`、`updated_at`、`content_hash`、`actor`。
 
+## Codex 与 MCP
+
+仓库包含 `.codex-plugin/plugin.json` 和独立 stdio MCP server：
+
+- `state_proof` 校验一份有界的内联状态文档，仅返回完整性、哈希、计数和违例。
+- `state_diff_proof` 比较两份内联文档，返回变更字段及内容寻址哈希，不回显标量正文。
+
+MCP 不读写文件系统，拒绝秘密形字段，单文档上限 1 MiB，也不暴露 freeze。文件写入仍只存在于已显式配置 workspace 边界的 DSH/CLI 表面。
+
 ## 边界
 
-v0.1 刻意不修改实时学历。唯一写动作是向独立快照目录冻结。实时状态写入必须服从所属系统的 schema 与事实生命周期；在插件里复制一套较弱写入器，只会制造第二个真相。
+插件刻意不修改实时学历。唯一写动作是向独立快照目录冻结。实时状态写入必须服从所属系统的 schema 与事实生命周期；在插件里复制一套较弱写入器，只会制造第二个真相。它也不是通用记忆库、插件信任扫描器或活动日志。
 
 ## 验证
 
@@ -54,6 +63,8 @@ v0.1 刻意不修改实时学历。唯一写动作是向独立快照目录冻结
 npm test
 npm run check
 npm run smoke:plugin
+npm run smoke:mcp
+python C:/Users/ZhuanZ/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .
 ```
 
 MIT

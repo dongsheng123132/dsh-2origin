@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import { mkdtemp, readFile, symlink, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { contentHash, diffStates, freezeState, loadState, projectState } from '../lib/state.mjs'
+import { contentHash, diffProof, diffStates, freezeState, loadState, projectState, stateProof } from '../lib/state.mjs'
 
 function state(overrides = {}) {
   const value = {
@@ -45,6 +45,19 @@ test('semantic diff reports scalar and array changes without provenance noise', 
   assert.equal(diff.fields[1].added.length, 1)
 })
 
+test('proof projections preserve verdicts and hashes without scalar state prose', () => {
+  const current = state()
+  const candidate = state({ current_state: 'secret business prose', version: 2 })
+  const proof = stateProof(current)
+  const diff = diffProof(current, candidate)
+  assert.equal(proof.integrity, true)
+  assert.equal(diff.changed, true)
+  assert.deepEqual(diff.fields.map(field => field.field), ['current_state'])
+  assert.equal('before' in diff.fields[0], false)
+  assert.equal('after' in diff.fields[0], false)
+  assert.doesNotMatch(JSON.stringify(diff), /secret business prose/)
+})
+
 test('freeze uses optimistic lock, is idempotent and verifies read-back', async () => {
   const root = await mkdtemp(join(tmpdir(), 'dsh-2origin-'))
   const value = state()
@@ -65,4 +78,3 @@ test('state and freeze paths cannot escape through traversal or symlinks', async
   await symlink(join(outside, 'task.origin.json'), join(root, 'linked.json'))
   await assert.rejects(() => loadState({ workspaceRoot: root, stateFile: 'linked.json' }), /outside/)
 })
-
