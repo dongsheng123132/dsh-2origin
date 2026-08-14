@@ -1,5 +1,10 @@
 # dsh-2origin
 
+[![CI](https://github.com/dongsheng123132/dsh-2origin/actions/workflows/check.yml/badge.svg)](https://github.com/dongsheng123132/dsh-2origin/actions/workflows/check.yml)
+[![MIT license](https://img.shields.io/github/license/dongsheng123132/dsh-2origin)](LICENSE)
+[![Node.js 22+](https://img.shields.io/badge/Node.js-%E2%89%A522-339933?logo=nodedotjs&logoColor=white)](package.json)
+[![Awesome DSH Plugins](https://img.shields.io/badge/Awesome_DSH-verified_lab-0969da)](https://github.com/dongsheng123132/awesome-dsh-plugins#2origin-plugin-lab)
+
 Evidence-first 2Origin state projection, semantic diff and immutable freeze for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
 Chat history is not the handoff artifact. A `task.origin.json` state is. This plugin lets a DSH agent inspect that state, distinguish semantic content from provenance metadata, compare a complete candidate, and freeze the exact observed version with an optimistic-lock credential.
@@ -52,4 +57,3 @@ npm run smoke:plugin
 ```
 
 MIT
-

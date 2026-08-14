@@ -1,5 +1,10 @@
 # dsh-2origin
 
+[![CI](https://github.com/dongsheng123132/dsh-2origin/actions/workflows/check.yml/badge.svg)](https://github.com/dongsheng123132/dsh-2origin/actions/workflows/check.yml)
+[![MIT 许可证](https://img.shields.io/github/license/dongsheng123132/dsh-2origin)](LICENSE)
+[![Node.js 22+](https://img.shields.io/badge/Node.js-%E2%89%A522-339933?logo=nodedotjs&logoColor=white)](package.json)
+[![Awesome DSH Plugins](https://img.shields.io/badge/Awesome_DSH-%E5%B7%B2%E9%AA%8C%E8%AF%81%E5%AE%9E%E9%AA%8C-0969da)](https://github.com/dongsheng123132/awesome-dsh-plugins/blob/main/README.zh-CN.md#2origin-%E6%8F%92%E4%BB%B6%E5%AE%9E%E9%AA%8C%E5%AE%A4)
+
 面向 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的证据优先 2Origin 状态投影、语义差异与不可变冻结插件。
 
 聊天记录不是交接信物，`task.origin.json` 才是。插件让 DSH agent 检查学历、区分语义内容与来源元数据、比较完整候选，并凭刚观测到的乐观锁指纹冻结精确版本。
@@ -52,4 +57,3 @@ npm run smoke:plugin
 ```
 
 MIT
-
