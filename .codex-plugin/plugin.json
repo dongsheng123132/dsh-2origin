@@ -1,6 +1,6 @@
 {
   "name": "dsh-2origin",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Verify, compare and freeze integrity-checked 2Origin task state without creating a second live-state writer.",
   "author": { "name": "2Origin", "url": "https://github.com/dongsheng123132" },
   "homepage": "https://github.com/dongsheng123132/dsh-2origin#readme",
